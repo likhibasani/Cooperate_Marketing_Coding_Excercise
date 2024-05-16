@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ad Reimbursement</title>
+</head>
+<body>
+    <h1>Ad Reimbursement</h1>
+    <form action="{{ url_for('add_ad') }}" method="post">
+        <label for="ad_type">Ad Type:</label>
+        <select name="ad_type" id="ad_type">
+            <option value="0011">0011</option>
+            <option value="1011">1011</option>
+            <option value="1111">1111</option>
+            <option value="1010">1010</option>
+        </select>
+        <label for="count">Ads Run:</label>
+        <input type="number" name="count" id="count" required>
+        <label for="spend">Spend per Ad:</label>
+        <input type="number" step="0.01" name="spend" id="spend" required>
+        <button type="submit">Add Ad</button>
+    </form>
+    <h2>Ad Details</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Ad Type</th>
+                <th>Ads Run</th>
+                <th>Spend</th>
+                <th>Cost Sharing</th>
+                <th>Reimbursement</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ad in ads %}
+            <tr>
+                <td>{{ ad.ad_type }}</td>
+                <td>{{ ad.count }}</td>
+                <td>{{ ad.spend }}</td>
+                <td>{{ ad.spend * reimbursement.ads[ad.ad_type]['cost_share_rate'] }}</td>
+                <td>{{ ad.spend * reimbursement.ads[ad.ad_type]['cost_share_rate'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h3>Total Reimbursement: ${{ total_reimbursement }}</h3>
+</body>
+</html>
